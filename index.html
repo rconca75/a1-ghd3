@@ -1,13 +1,149 @@
 <!DOCTYPE html>
-<div id="container"></div>
+<style>
+  #container {
+    position: relative;
+    display: inline-block;
+  }
+  #container img, #container svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #container svg {
+    z-index: 1;
+  }
+</style>
+<div id="container">
+  <img id="yochan" src="https://i.redd.it/8b4qc091hkdb1.jpg" alt="yochan">
+</div>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script type="module">
-
+<canvas id="canvas"></canvas>
 <script>
   console.log(d3); // test if d3 is loaded
-  // Add an SVG
-  // Add Rectangles
-  // Add Circles
-  // Add Lines
-  // Add Polygons
+
+  const img = document.getElementById('yochan');
+  img.onload = function() {
+    const width = img.naturalWidth;
+    const height = img.naturalHeight;
+  
+    // add svg
+    const svg = d3.select("#container")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("border", "2px solid black");
+    
+    //add a rectangle as a background
+    svg.append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", width)
+      .attr("height", height)
+      .style("fill", "steelblue");
+    
+    // body
+    svg.append("ellipse")
+      .attr("cx", (width / 2) + 5)
+      .attr("cy", (height / 2) + 20)
+      .attr("rx", 290)
+      .attr("ry", 310)
+      .attr("fill", "green")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
+
+    // head
+    svg.append("ellipse")
+      .attr("cx", (width / 2) )
+      .attr("cy", 240)
+      .attr("rx", 170)
+      .attr("ry", 160)
+      .attr("fill", "blue")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
+
+    // set up the line maker
+    const line = d3.line()
+      .x(d => d.x)
+      .y(d => d.y)
+      .curve(d3.curveCardinal);
+
+    // make left eyeline
+    const eyeCoordsBottomLeft = [
+      {x : (width / 3)     , y : (height / 3) - 7},
+      {x : (width / 3) + 10, y : (height / 3)    },
+      {x : (width / 2) - 90, y : (height / 3) + 2}
+    ];
+
+    svg.append("path")
+      .datum(eyeCoordsBottomLeft)
+      .attr("d", line)
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr("fill", "none");
+
+    // make right eyeline
+    const eyeCoordsBottomRight = [
+      {x : (width / 1.5) - 15, y : (height / 3) + 10},
+      {x : (width / 1.5) - 45, y : (height / 3) + 20 },
+      {x : (width / 1.5) - 70, y : (height / 3) + 15}
+    ];
+
+    svg.append("path")
+      .datum(eyeCoordsBottomRight)
+      .attr("d", line)
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr("fill", "none")
+
+    // mouth
+    const mouthCoords = [
+      [(width / 2) - 10, (height / 2) + 50],
+      [(width / 2) - 45, (height / 2) + 100],
+      [(width / 2) - 65, (height / 3) + 100]
+    ];
+
+    svg.append("polygon")
+      .attr("points", mouthCoords.map(d => d.join(",")).join(" "))
+      .attr("fill", "pink")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
+    
+    // nose
+    // left nostril
+    svg.append("ellipse")
+      .attr("cx", (width / 2) - 85)
+      .attr("cy", (height / 2) + 10)
+      .attr("rx", 50)
+      .attr("ry", 50)
+      .attr("fill", "purple")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
+    
+    // right nostril
+    svg.append("ellipse")
+      .attr("cx", (width / 2) + 15)
+      .attr("cy", (height / 2) + 25)
+      .attr("rx", 50)
+      .attr("ry", 50)
+      .attr("fill", "purple")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2);
+
+    // add text
+    svg.append("text")
+      .attr("x", width / 1.2)
+      .attr("y", 40)
+      .attr("text-anchor", "middle")
+      .style("fill", "black")
+      .style("font-size", "16px")
+      .text("Reference image:")
+
+    // add image
+    svg.append("image")
+      .attr("slink:href", "https://i.redd.it/8b4qc091hkdb1.jpg")
+      .attr("x", width / 1.2)
+      .attr("y", 50)
+      .attr("width", width / 10)
+      .attr("height", height / 10);
+  };
 </script>
