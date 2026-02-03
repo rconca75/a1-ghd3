@@ -85,3 +85,11 @@ Remember, it is up to *you* to define what constitutes a technical and design ac
 Be ambitious as these are designed to allow you to shape your learning.
 These are the only way to move from B to A territory.
 
+README Update:
+
+For this project, I did a simple recreation of a seal photo to accquaint myself with JS and the d3 library since this is my first time using them. I followed the basic project requirements with basic shapes (a few ellipses, lines, a triangle, and a rectangle for the background), changing their colors to try and match the initial image which I added to the site as well.
+
+[GH Link]("https://github.com/rconca75/a1-ghd3/blob/main/index.html") (please let me know if the gh link doesn't work, I was having issues with the format given above and this was the only way it worked on my browser)
+
+Screenshot:
+![Screenshot of site](Screenshot%202026-01-21%20150536.png)
